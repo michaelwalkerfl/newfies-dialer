@@ -319,7 +319,7 @@ func_install_dependencies(){
             mkdir ~/.luarocks
             rm ~/.luarocks/config.lua
             # echo '   rocks_servers={ "http://luarocks.giga.puc-rio.br/" }' >> ~/.luarocks/config.lua
-            echo '   rocks_servers={ "http://rocks.moonscript.org/manifests/luarocks/" }' >> ~/.luarocks/config.lua
+            echo '   rocks_servers={ "https://rocks.moonscript.org/manifests/luarocks/" }' >> ~/.luarocks/config.lua
         ;;
     esac
 
@@ -346,7 +346,7 @@ func_install_dependencies(){
     #Issue with last version of lpeg - lua libs/tag_replace.lua will seg fault
     #Pin the version 0.10.2-1
     luarocks-5.2 remove lpeg --force
-    luarocks-5.2 install http://rocks.moonscript.org/manifests/luarocks/lpeg-0.12-1.rockspec
+    luarocks-5.2 install https://rocks.moonscript.org/manifests/luarocks/lpeg-0.12-1.rockspec
 
     #luarocks-5.2 install lua-cmsgpack
     cd /usr/src/
