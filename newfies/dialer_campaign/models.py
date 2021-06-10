@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import fields
 from django.db import transaction
 
 from django_lets_go.intermediate_model_base_class import Model
@@ -238,7 +238,7 @@ class Campaign(Model):
     content_type = models.ForeignKey(ContentType, verbose_name=_("type"),
                                      limit_choices_to={"model__in": ["survey_template", "survey"]})
     object_id = models.PositiveIntegerField(verbose_name=_("application"))
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = fields.GenericForeignKey('content_type', 'object_id')
     extra_data = models.CharField(max_length=120, blank=True, verbose_name=_("extra parameters"),
                                   help_text=_("additional application parameters."))
     phonebook = models.ManyToManyField(Phonebook, blank=True, null=True)
