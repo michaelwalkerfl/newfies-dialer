@@ -16,7 +16,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import fields
 from dialer_gateway.models import Gateway
 from dialer_campaign.models import Campaign, Subscriber
 from dialer_cdr.constants import CALLREQUEST_STATUS, CALLREQUEST_TYPE, LEG_TYPE, CALL_DISPOSITION,\
@@ -122,7 +122,7 @@ class Callrequest(Model):
     # used to define the Voice App or the Survey
     content_type = models.ForeignKey(ContentType, verbose_name=_("type"))
     object_id = models.PositiveIntegerField(verbose_name=_("application"))
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = fields.GenericForeignKey('content_type', 'object_id')
     # used to flag if the call is completed
     completed = models.BooleanField(default=False, verbose_name=_('call completed'))
 
