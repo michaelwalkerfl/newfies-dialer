@@ -55,7 +55,7 @@ SCRIPT_NOTICE="This install script is only intended to run on Debian 7.X or 8.X"
 func_identify_os() {
     if [ -f /etc/debian_version ] ; then
         DIST='DEBIAN'
-        if [ "$(lsb_release -cs)" != "wheezy" ] && [ "$(lsb_release -cs)" != "jessie" ]; then
+        if [ "$(lsb_release -cs)" != "wheezy" ] && [ "$(lsb_release -cs)" != "jessie" ] && [ "$(lsb_release -cs)" != "buster" ]; then
             echo $SCRIPT_NOTICE
             exit 255
         fi
@@ -190,30 +190,31 @@ func_install_dependencies(){
             locale-gen pt_BR.UTF-8
             #dpkg-reconfigure locales
 
-            apt-get -y remove apache2.2-common apache2
+            # apt-get -y remove apache2.2-common apache2
             apt-get -y install sudo curl
             apt-get -y install hdparm htop vim
             update-alternatives --set editor /usr/bin/vim.tiny
 
             #Install Postgresql
             apt-get -y install libpq-dev
-            apt-get -y install postgresql-9.3 postgresql-contrib-9.3
-            pg_createcluster 9.3 main --start
+            apt-get -y install postgresql-13 postgresql-contrib-13
+            pg_createcluster 13 main --start
             /etc/init.d/postgresql start
 
-            apt-get -y install python-software-properties
+            apt-get -y install software-properties-common
             apt-get -y install python-setuptools python-dev build-essential
             apt-get -y install nginx supervisor
             apt-get -y install git-core mercurial gawk cmake
-            apt-get -y install python-pip
+            apt-get -y install python-pip python-virtualenv
             # for audiofile convertion
             apt-get -y install libsox-fmt-mp3 libsox-fmt-all mpg321
             #repeat flite install in case FS is on a different server
             apt-get -y install flite
 
             #Install Node.js & NPM
-            apt-get -y install nodejs-legacy
-            curl -sL https://deb.nodesource.com/setup | bash -
+            # apt-get -y install nodejs-legacy
+            # curl -sL https://deb.nodesource.com/setup | bash -
+            curl -sL https://deb.nodesource.com/setup_14.x | bash -
             apt-get install -y nodejs
 
             # cd /usr/src/ ; git clone https://github.com/joyent/node.git
@@ -226,7 +227,7 @@ func_install_dependencies(){
             # node -v
 
             #Lua Deps
-            apt-get -y install lua5.2 liblua5.2-dev
+            apt-get -y install lua5.2 liblua5.2-dev lua-sec
 
             #needed by lua-curl
             apt-get -y install libcurl4-openssl-dev
@@ -297,17 +298,17 @@ func_install_dependencies(){
 
     #Install Luarocks from sources
     cd /usr/src
-    rm -rf luarocks
-    # wget --no-check-certificate http://luarocks.org/releases/luarocks-2.1.2.tar.gz
-    #Use Github for sources
-    wget --no-check-certificate https://github.com/keplerproject/luarocks/archive/v2.1.2.tar.gz -O luarocks-2.1.2.tar.gz
-    tar zxf luarocks-*.tar.gz
-    rm -rf luarocks-*.tar.gz
-    mv luarocks-* luarocks
-    cd luarocks
-    ./configure
-    make
-    make bootstrap
+    # rm -rf luarocks
+    # # wget --no-check-certificate http://luarocks.org/releases/luarocks-2.1.2.tar.gz
+    # #Use Github for sources
+    # wget --no-check-certificate https://github.com/keplerproject/luarocks/archive/v2.1.2.tar.gz -O luarocks-2.1.2.tar.gz
+    # tar zxf luarocks-*.tar.gz
+    # rm -rf luarocks-*.tar.gz
+    # mv luarocks-* luarocks
+    # cd luarocks
+    # ./configure
+    # make
+    # make bootstrap
 
     #Check if Luarocks
     LUAROCKS_UP=$(ping -c 2 luarocks.org 2>&1 | grep -c "100%")
@@ -326,7 +327,8 @@ func_install_dependencies(){
     #Prepare settings for installation
     case $DIST in
         'DEBIAN')
-            luarocks-5.2 install luasql-postgres PGSQL_INCDIR=/usr/include/postgresql/
+            apt-get install lua-sql-postgres lua-socket lua-logging lua-lpeg lua-json -y
+            # luarocks-5.2 install luasql-postgres PGSQL_INCDIR=/usr/include/postgresql/
         ;;
         'CENTOS')
             luarocks-5.2 install luasql-postgres PGSQL_DIR=/usr/pgsql-9.1/
@@ -334,9 +336,9 @@ func_install_dependencies(){
     esac
 
     #Install Lua dependencies
-    luarocks-5.2 install luasec  # install luasec to install inspect via https
-    luarocks-5.2 install luasocket
-    luarocks-5.2 install lualogging
+    # luarocks-5.2 install luasec  # install luasec to install inspect via https
+    # luarocks-5.2 install luasocket
+    # luarocks-5.2 install lualogging
     luarocks-5.2 install loop
     luarocks-5.2 install md5 1.2-1
     luarocks-5.2 install luafilesystem
@@ -369,7 +371,7 @@ func_install_dependencies(){
 
     echo ""
     echo "easy_install -U setuptools pip distribute"
-    easy_install -U setuptools pip distribute
+    # easy_install -U setuptools pip distribute
 
     # install Bower
     npm install -g bower
@@ -405,12 +407,12 @@ func_setup_virtualenv() {
     chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
     if [ $chk -lt 1 ] ; then
         echo "Set Virtualenvwrapper into bash"
-        echo "export WORKON_HOME=/usr/share/virtualenvs" >> ~/.bashrc
+        echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
         echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.bashrc
     fi
 
     # Setup virtualenv
-    export WORKON_HOME=/usr/share/virtualenvs
+    export WORKON_HOME=$HOME/.virtualenvs
     source $SCRIPT_VIRTUALENVWRAPPER
 
     mkvirtualenv $NEWFIES_ENV
