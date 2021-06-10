@@ -14,7 +14,7 @@
 
 from django.contrib import admin
 from django.contrib import messages
-from django.urls import re_path
+from django.conf.urls import url
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.admin.options import IncorrectLookupParameters
@@ -72,7 +72,7 @@ class SMSCampaignAdmin(GenericAdminModelAdmin):
 
     def get_urls(self):
         urls = super(SMSCampaignAdmin, self).get_urls()
-        my_urls = re_path('',
+        my_urls = url('',
                            (r'^$', self.admin_site.admin_view(self.changelist_view)),
                            (r'^add/$', self.admin_site.admin_view(self.add_view)),
                            )
@@ -140,7 +140,7 @@ class SMSMessageAdmin(admin.ModelAdmin):
 
     def get_urls(self):
         urls = super(SMSMessageAdmin, self).get_urls()
-        my_urls = re_path('',
+        my_urls = url('',
                            (r'^$', self.admin_site.admin_view(self.changelist_view)),
                            (r'^sms_daily_report/$', self.admin_site.admin_view(self.sms_daily_report)),
                            (r'^export_sms_report/$', self.admin_site.admin_view(self.export_sms_report)),
