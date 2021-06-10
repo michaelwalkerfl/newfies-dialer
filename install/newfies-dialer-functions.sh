@@ -49,7 +49,7 @@ HTTP_PORT='8008'
 
 #Django bug https://code.djangoproject.com/ticket/16017
 export LANG="en_US.UTF-8"
-SCRIPT_NOTICE="This install script is only intended to run on Debian 7.X or 8.X"
+SCRIPT_NOTICE="This install script is only intended to run on Debian 7.X or 8.X or 10.X"
 
 # Identify Linux Distribution type
 func_identify_os() {
