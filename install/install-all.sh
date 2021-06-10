@@ -34,7 +34,7 @@ if [ -z "${INSTALL_FS}" ]; then
 fi
 
 
-SCRIPT_NOTICE="This script is only intended to run on Debian 64bits 7.X or 8.X"
+SCRIPT_NOTICE="This script is only intended to run on Debian 64bits 7.X or 8.X or 10.X"
 
 ARCH=$(uname -m)
 if [ $ARCH != "x86_64" ]; then
@@ -47,7 +47,7 @@ func_identify_os() {
     if [ -f /etc/debian_version ] ; then
         DIST='DEBIAN'
         apt-get -y install lsb-release
-        if [ "$(lsb_release -cs)" != "wheezy" ] && [ "$(lsb_release -cs)" != "jessie" ]; then
+        if [ "$(lsb_release -cs)" != "wheezy" ] && [ "$(lsb_release -cs)" != "jessie" ] && [ "$(lsb_release -cs)" != "buster" ]; then
             echo $SCRIPT_NOTICE
             exit 255
         fi
@@ -125,12 +125,12 @@ esac
 if [ $INSTALL_FS = "yes" ]; then
     #Install Freeswitch
     cd /usr/src/
-    wget --no-check-certificate  https://raw.githubusercontent.com/A5DkjGQUZx/newfies-dialer/develop/install/install-freeswitch.sh -O install-freeswitch.sh
+    wget --no-check-certificate  https://raw.githubusercontent.com/michaelwalkerfl/newfies-dialer/develop/install/install-freeswitch.sh -O install-freeswitch.sh
     bash install-freeswitch.sh
     /etc/init.d/freeswitch start
 fi
 
 #Install Newfies
 cd /usr/src/
-wget --no-check-certificate https://raw.githubusercontent.com/A5DkjGQUZx/newfies-dialer/develop/install/install-newfies.sh -O install-newfies.sh
+wget --no-check-certificate https://raw.githubusercontent.com/michaelwalkerfl/newfies-dialer/develop/install/install-newfies.sh -O install-newfies.sh
 bash install-newfies.sh
