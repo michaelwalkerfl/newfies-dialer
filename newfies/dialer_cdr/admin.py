@@ -15,7 +15,7 @@
 from django.contrib import admin
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.views.main import ERROR_FLAG
-from django.conf.urls import patterns
+from django.conf.urls import url
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
@@ -124,7 +124,7 @@ class VoIPCallAdmin(admin.ModelAdmin):
 
     def get_urls(self):
         urls = super(VoIPCallAdmin, self).get_urls()
-        my_urls = patterns('',
+        my_urls = url('',
                            (r'^$', self.admin_site.admin_view(self.changelist_view)),
                            (r'^voip_daily_report/$', self.admin_site.admin_view(self.voip_daily_report)),
                            (r'^export_voip_report/$', self.admin_site.admin_view(self.export_voip_report)),

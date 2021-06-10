@@ -13,7 +13,7 @@
 #
 from django.contrib import admin
 from django.contrib import messages
-from django.conf.urls import patterns
+from django.conf.urls import url
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
 from django.core.urlresolvers import reverse
@@ -72,7 +72,7 @@ class CampaignAdmin(GenericAdminModelAdmin):
 
     def get_urls(self):
         urls = super(CampaignAdmin, self).get_urls()
-        my_urls = patterns('',
+        my_urls = url('',
                            (r'^$', self.admin_site.admin_view(self.changelist_view)),
                            (r'^add/$', self.admin_site.admin_view(self.add_view)),
                            )
@@ -115,7 +115,7 @@ class SubscriberAdmin(admin.ModelAdmin):
 
     def get_urls(self):
         urls = super(SubscriberAdmin, self).get_urls()
-        my_urls = patterns('',
+        my_urls = url('',
                            (r'^subscriber_report/$', self.admin_site.admin_view(self.subscriber_report)),
                            )
         return my_urls + urls
