@@ -14,7 +14,7 @@
 
 from django.contrib import admin
 from django.contrib import messages
-from django.conf.urls import re_path
+from django.urls import re_path
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.admin.options import IncorrectLookupParameters
