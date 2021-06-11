@@ -22,7 +22,7 @@ done
 echo "Install Django requirements..."
 for line in $(cat requirements/django.txt | grep -v \#)
 do
-    pip install $line --use-mirrors --allow-unverified django-admin-tools
+    pip install $line --use-mirrors django-admin-tools
 done
 
 echo "Install Dev requirements..."
