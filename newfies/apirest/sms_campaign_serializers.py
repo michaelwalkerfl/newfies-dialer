@@ -119,7 +119,8 @@ class SMSCampaignSerializer(serializers.HyperlinkedModelSerializer):
     """
     user = serializers.Field(source='user')
     sms_gateway = serializers.HyperlinkedRelatedField(
-        read_only=False, view_name='sms-gateway-detail')
+        read_only=False,  queryset=SMSGateway.objects.all(),
+        view_name='sms-gateway-detail')
 
     class Meta:
         model = SMSCampaign

@@ -12,7 +12,7 @@
 # Arezqui Belaid <info@star2billing.com>
 #
 
-from django.conf.urls import patterns
+from django.conf.urls import url
 
 
-urlpatterns = patterns('dialer_gateway.views',)
+urlpatterns = url('dialer_gateway.views',)

@@ -17,7 +17,7 @@ from rest_framework import serializers
 from calendar_settings.models import CalendarSetting
 from survey.models import Survey
 from audiofield.models import AudioFile
-
+from sms.models import Gateway as SMS_Gateway
 
 class CalendarSettingSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -96,7 +96,8 @@ class CalendarSettingSerializer(serializers.HyperlinkedModelSerializer):
     """
     user = serializers.Field(source='user')
     sms_gateway = serializers.HyperlinkedRelatedField(
-        read_only=False, view_name='sms-gateway-detail')
+        read_only=False, queryset=SMS_Gateway.objects.all(),
+        view_name='sms-gateway-detail')
 
     class Meta:
         model = CalendarSetting
