@@ -504,19 +504,19 @@ func_install_pip_deps(){
     for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
     do
         echo "pip install $line"
-        pip install $line
+        pip3 install $line
     done
     echo "Install Django requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/django.txt | grep -v \#)
     do
         echo "pip install $line"
-        pip install $line --allow-unverified django-admin-tools
+        pip3 install $line --allow-unverified django-admin-tools
     done
     echo "Install Test requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/test.txt | grep -v \#)
     do
         echo "pip install $line"
-        pip install $line
+        pip3 install $line
     done
 
     #Install Python ESL / this needs to be done within the virtualenv
@@ -577,7 +577,9 @@ func_prepare_settings(){
     if [ -z "$IPADDR" ]; then
         #the following work on Docker container
         # ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'
-        IPADDR=`ip -4 -o addr show eth0 | cut -d ' ' -f 7 | cut -d '/' -f 1`
+        # IPADDR=`ip -4 -o addr show eth0 | cut -d ' ' -f 7 | cut -d '/' -f 1`
+        # the following works on Debian 10.X
+        IPADDR=`hostname -I | cut -d' ' -f1`
         if [ -z "$IPADDR" ]; then
             clear
             echo "we have not detected your IP address automatically!"
