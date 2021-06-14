@@ -1,8 +1,9 @@
-Sphinx
-Werkzeug
-django-debug-toolbar
-ipython
-pip-tools
-pygraphviz
-django-debug-toolbar-template-timings
-fake-factory
+Sphinx==4.0.2
+Werkzeug==2.0.1
+django-debug-toolbar==3.2.1
+ipython==7.24.1
+pip-tools==6.1.0
+# Need to `brew/apt/yum install graphviz` first
+pygraphviz==1.7
+django-debug-toolbar-template-timings==0.9
+fake-factory==9999.9.9

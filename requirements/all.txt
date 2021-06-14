@@ -1,4 +1,4 @@
--r basic.txt
--r django.txt
+-r py3-basic.txt
+-r py3-django.txt
 -r dev.txt
 -r test.txt
