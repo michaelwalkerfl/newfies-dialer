@@ -139,7 +139,7 @@ func_check_dependencies() {
     echo ""
 
     #Check Django
-    grep_pip=`pip freeze| grep Django`
+    grep_pip=`pip3 freeze| grep Django`
     if echo $grep_pip | grep -i "Django" > /dev/null ; then
         echo "OK : Django installed..."
     else
@@ -148,7 +148,7 @@ func_check_dependencies() {
     fi
 
     #Check Celery
-    grep_pip=`pip freeze| grep celery`
+    grep_pip=`pip3 freeze| grep celery`
     if echo $grep_pip | grep -i "celery" > /dev/null ; then
         echo "OK : celery installed..."
     else
@@ -400,8 +400,8 @@ func_setup_virtualenv() {
         ;;
     esac
 
-    pip install virtualenv
-    pip install virtualenvwrapper
+    pip3 install virtualenv
+    pip3 install virtualenvwrapper
 
     # Enable virtualenvwrapper
     chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
@@ -493,12 +493,12 @@ func_install_pip_deps(){
     echo "func_install_pip_deps..."
 
     #Upgrade pip to latest (1.5)
-    pip install pip --upgrade
+    pip3 install pip --upgrade
 
     #pip now only installs stable versions by default, so we need to use --pre option
-    pip install --pre pytz
+    pip3 install --pre pytz
     #For python 2.6 only
-    pip install importlib
+    pip3 install importlib
 
     echo "Install Basic requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
@@ -710,7 +710,7 @@ func_nginx_supervisor(){
         ;;
         'CENTOS')
             #Install Supervisor
-            pip install supervisor
+            pip3 install supervisor
 
             cp /usr/src/newfies-dialer/install/supervisor/centos/supervisord /etc/init.d/supervisor
             chmod +x /etc/init.d/supervisor
@@ -743,7 +743,7 @@ func_celery_supervisor(){
         ;;
         'CENTOS')
             #Install Supervisor
-            pip install supervisor
+            pip3 install supervisor
 
             cp /usr/src/newfies-dialer/install/supervisor/centos/supervisord /etc/init.d/supervisor
             chmod +x /etc/init.d/supervisor
