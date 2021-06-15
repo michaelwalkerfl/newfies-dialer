@@ -21,7 +21,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    # ('Test User', 'email@domain.com'),
 )
 
 TIME_ZONE = 'Europe/Madrid'

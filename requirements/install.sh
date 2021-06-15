@@ -16,7 +16,7 @@
 echo "Install basic requirements..."
 for line in $(cat requirements/basic.txt | grep -v \#)
 do
-    pip3 install $line --use-mirrors
+    pip3 install $line
 done
 
 echo "Install Django requirements..."
