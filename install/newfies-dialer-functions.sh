@@ -25,7 +25,7 @@
 
 # Set branch to install develop / default: master
 if [ -z "${BRANCH}" ]; then
-    BRANCH='master'
+    BRANCH='develop'
 fi
 
 DATETIME=$(date +"%Y%m%d%H%M%S")
@@ -139,7 +139,7 @@ func_check_dependencies() {
     echo ""
 
     #Check Django
-    grep_pip=`pip3 freeze| grep Django`
+    grep_pip=`python -m pip freeze| grep Django`
     if echo $grep_pip | grep -i "Django" > /dev/null ; then
         echo "OK : Django installed..."
     else
@@ -148,7 +148,7 @@ func_check_dependencies() {
     fi
 
     #Check Celery
-    grep_pip=`pip3 freeze| grep celery`
+    grep_pip=`python -m pip freeze| grep celery`
     if echo $grep_pip | grep -i "celery" > /dev/null ; then
         echo "OK : celery installed..."
     else
@@ -396,12 +396,12 @@ func_setup_virtualenv() {
         'CENTOS')
             SCRIPT_VIRTUALENVWRAPPER="/usr/bin/virtualenvwrapper.sh"
             #Upgrade Setuptools
-            pip install setuptools --no-use-wheel --upgrade
+            python -m pip install setuptools --no-use-wheel --upgrade
         ;;
     esac
 
-    pip3 install virtualenv
-    pip3 install virtualenvwrapper
+    python -m pip install virtualenv
+    python -m pip install virtualenvwrapper
 
     # Enable virtualenvwrapper
     chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
@@ -493,31 +493,31 @@ func_install_pip_deps(){
     echo "func_install_pip_deps..."
 
     #Upgrade pip to latest (1.5)
-    pip3 install pip --upgrade
-    pip3 install wheel
+    python -m pip install pip --upgrade
+    python -m pip install wheel
 
     #pip now only installs stable versions by default, so we need to use --pre option
-    pip3 install --pre pytz
+    python -m pip install --pre pytz
     #For python 2.6 only
-    pip3 install importlib
+    python -m pip install importlib
 
     echo "Install Basic requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
     do
         echo "pip3 install $line"
-        pip3 install $line
+        python -m pip install $line
     done
     echo "Install Django requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/django.txt | grep -v \#)
     do
         echo "pip3 install $line"
-        pip3 install $line django-admin-tools
+        python -m pip install $line django-admin-tools
     done
     echo "Install Test requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/test.txt | grep -v \#)
     do
         echo "pip3 install $line"
-        pip3 install $line
+        python -m pip install $line
     done
 
     #Install Python ESL / this needs to be done within the virtualenv
@@ -530,7 +530,7 @@ func_install_pip_deps(){
     echo "**********"
     echo "PIP Freeze"
     echo "**********"
-    pip freeze
+    python -m pip freeze
 }
 
 
@@ -711,7 +711,7 @@ func_nginx_supervisor(){
         ;;
         'CENTOS')
             #Install Supervisor
-            pip3 install supervisor
+            python -m pip install supervisor
 
             cp /usr/src/newfies-dialer/install/supervisor/centos/supervisord /etc/init.d/supervisor
             chmod +x /etc/init.d/supervisor
@@ -744,7 +744,7 @@ func_celery_supervisor(){
         ;;
         'CENTOS')
             #Install Supervisor
-            pip3 install supervisor
+            python -m pip install supervisor
 
             cp /usr/src/newfies-dialer/install/supervisor/centos/supervisord /etc/init.d/supervisor
             chmod +x /etc/init.d/supervisor
