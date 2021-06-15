@@ -499,7 +499,7 @@ func_install_pip_deps(){
     #pip now only installs stable versions by default, so we need to use --pre option
     python -m pip install --pre pytz
     #For python 2.6 only
-    python -m pip install importlib
+    # python -m pip install importlib
 
     echo "Install Basic requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
@@ -902,8 +902,8 @@ func_install_backend() {
     esac
 
     #Install Python ESL / those lines doesn't work in install-freeswitch.sh
-    cd /usr/src/freeswitch/libs/esl
-    make pymod-install
+    #cd /usr/src/freeswitch/libs/esl
+    # make pymod-install
 
     #Restart FreeSWITCH to find the startup-script
     /etc/init.d/freeswitch restart
