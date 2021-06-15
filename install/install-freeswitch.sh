@@ -85,7 +85,7 @@ func_install_deps() {
                 #DEBIAN8
                 apt-get -y install libgnutls28-dev libtiff5-dev libtiff5
             fi
-            apt-get -y install libgnutls28 libvorbis0a libogg0 libogg-dev libvorbis-dev
+            apt-get -y install libgnutls28-dev libvorbis0a libogg0 libogg-dev libvorbis-dev
             apt-get -y install flite flite1-dev
             apt-get -y install unixodbc-dev odbc-postgresql
             ;;
