@@ -202,10 +202,10 @@ func_install_dependencies(){
             /etc/init.d/postgresql start
 
             apt-get -y install software-properties-common
-            apt-get -y install python3-setuptools python3-dev build-essential
+            apt-get -y install python-setuptools python-dev build-essential
             apt-get -y install nginx supervisor
             apt-get -y install git-core mercurial gawk cmake
-            apt-get -y install python3-pip python3-venv
+            apt-get -y install python-pip python-venv
             # for audiofile convertion
             apt-get -y install libsox-fmt-mp3 libsox-fmt-all mpg321
             #repeat flite install in case FS is on a different server
@@ -764,35 +764,35 @@ func_celery_supervisor(){
 func_django_newfiesdialer_install(){
     #Prepare Django DB / Migrate / Create User ...
     cd $INSTALL_DIR/
-    python3 manage.py syncdb --noinput
-    python3 manage.py migrate dialer_settings
-    python3 manage.py migrate dialer_contact
-    python3 manage.py migrate sms
-    python3 manage.py migrate dnc
-    python3 manage.py migrate dialer_campaign
-    python3 manage.py migrate
+    python manage.py syncdb --noinput
+    python manage.py migrate dialer_settings
+    python manage.py migrate dialer_contact
+    python manage.py migrate sms
+    python manage.py migrate dnc
+    python manage.py migrate dialer_campaign
+    python manage.py migrate
 
     #load default data
-    python3 manage.py loaddata appointment/fixtures/default_appointment.json
-    python3 manage.py loaddata dialer_gateway/fixtures/default_dialer_gateway.json
-    python3 manage.py loaddata dialer_settings/fixtures/default_dialer_settings.json
+    python manage.py loaddata appointment/fixtures/default_appointment.json
+    python manage.py loaddata dialer_gateway/fixtures/default_dialer_gateway.json
+    python manage.py loaddata dialer_settings/fixtures/default_dialer_settings.json
 
     #Load Countries Dialcode
     #python manage.py load_country_dialcode
     wget --no-check-certificate https://raw.github.com/areski/django-sms-gateway/master/sms/fixtures/example_gateways.json
-    python3 manage.py loaddata example_gateways.json
+    python manage.py loaddata example_gateways.json
     rm -f example_gateways.json
 
     clear
     echo ""
     echo "Create a super admin user..."
-    python3 manage.py createsuperuser
+    python manage.py createsuperuser
 
     echo "Install Bower deps"
-    python3 manage.py bower_install -- --allow-root
+    python manage.py bower_install -- --allow-root
 
     echo "Collects the static files"
-    python3 manage.py collectstatic --noinput
+    python manage.py collectstatic --noinput
 }
 
 
