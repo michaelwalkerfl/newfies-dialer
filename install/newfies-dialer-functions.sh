@@ -400,23 +400,25 @@ func_setup_virtualenv() {
         ;;
     esac
 
-    python -m pip install virtualenv
-    python -m pip install virtualenvwrapper
+    # python -m pip install virtualenv
+    # python -m pip install virtualenvwrapper
 
-    # Enable virtualenvwrapper
-    chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
-    if [ $chk -lt 1 ] ; then
-        echo "Set Virtualenvwrapper into bash"
-        echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-        echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.bashrc
-    fi
+    # # Enable virtualenvwrapper
+    # chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
+    # if [ $chk -lt 1 ] ; then
+    #     echo "Set Virtualenvwrapper into bash"
+    #     echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+    #     echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.bashrc
+    # fi
 
-    # Setup virtualenv
-    export WORKON_HOME=$HOME/.virtualenvs
-    source $SCRIPT_VIRTUALENVWRAPPER
+    # # Setup virtualenv
+    # export WORKON_HOME=$HOME/.virtualenvs
+    # source $SCRIPT_VIRTUALENVWRAPPER
 
-    mkvirtualenv $NEWFIES_ENV
-    workon $NEWFIES_ENV
+    # mkvirtualenv $NEWFIES_ENV
+    # workon $NEWFIES_ENV
+    python -m venv env
+    source env/bin/activate
 
     echo "Virtualenv $NEWFIES_ENV created and activated"
 }
@@ -504,19 +506,19 @@ func_install_pip_deps(){
     echo "Install Basic requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
     do
-        echo "pip3 install $line"
+        echo "pip install $line"
         python -m pip install $line
     done
     echo "Install Django requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/django.txt | grep -v \#)
     do
-        echo "pip3 install $line"
+        echo "pip install $line"
         python -m pip install $line django-admin-tools
     done
     echo "Install Test requirements..."
     for line in $(cat /usr/src/newfies-dialer/requirements/test.txt | grep -v \#)
     do
-        echo "pip3 install $line"
+        echo "pip install $line"
         python -m pip install $line
     done
 
