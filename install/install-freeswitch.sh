@@ -33,7 +33,7 @@ CURRENT_PATH=$PWD
 KERNELARCH="x86_64"
 # Valid Freeswitch versions are : v1.2.stable
 #FS_VERSION=v1.2.stable
-FS_VERSION=v1.4
+FS_VERSION=v1.10.6
 SCRIPT_NOTICE="This script is only intended to run on Debian 64 bit 7.X or 8.X or 10.X"
 
 # Identify Linux Distribution type
@@ -85,7 +85,7 @@ func_install_deps() {
                 #DEBIAN8
                 apt-get -y install libgnutls28-dev libtiff5-dev libtiff5
             fi
-            apt-get -y install libvorbis0a libogg0 libogg-dev libvorbis-dev
+            apt-get -y install libgnutls28 libvorbis0a libogg0 libogg-dev libvorbis-dev
             apt-get -y install flite flite1-dev
             apt-get -y install unixodbc-dev odbc-postgresql
             ;;
