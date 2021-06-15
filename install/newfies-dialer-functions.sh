@@ -495,6 +495,7 @@ func_install_pip_deps(){
     echo "func_install_pip_deps..."
 
     #Upgrade pip to latest (1.5)
+    source env/bin/activate
     python -m pip install pip --upgrade
     python -m pip install wheel
 
@@ -528,7 +529,7 @@ func_install_pip_deps(){
     python -m pip install python-ESL
 
     #Check Python dependencies
-    # func_check_dependencies
+    func_check_dependencies
 
     echo "**********"
     echo "PIP Freeze"
