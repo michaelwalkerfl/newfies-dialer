@@ -12,7 +12,8 @@ django-admin-tools==0.9.1
 django-admin-tools-stats==0.9.0
 django-audiofield==0.10.0
 django-bootstrap-form==3.4
-django-bootstrap3-datetimepicker==2.3
+git+https://github.com/michaelwalkerfl/django-bootstrap3-datetimepicker
+# django-bootstrap3-datetimepicker==2.3
 django-bower==5.2.0
 django-cache-utils==0.7.2
 django-celery==3.3.1
@@ -32,7 +33,8 @@ django-kombu==0.9.4
 django-lets-go==2.9.6
 django-mailer==2.1
 django-model-utils==4.1.1
-django-notification==0.2.2
+git+https://github.com/michaelwalkerfl/django-notification
+# django-notification==0.2.2
 django-notifications-hq==1.0
 django-nvd3==0.9.7
 django-pagination==1.0.7
@@ -41,7 +43,8 @@ django-qsstats-magic==1.1.0
 django-redis-cache==3.0.0
 django-redisboard==4.1.1
 django-registration-redux==2.9
-django-sms-gateway==0.2.0
+git+https://github.com/michaelwalkerfl/django-sms-gateway
+# django-sms-gateway==0.2.0
 django-urlauth==0.1.8
 django-uuidfield==0.5.0
 djangorestframework==3.12.4
@@ -50,7 +53,8 @@ idna==2.10
 Jinja2==3.0.1
 jsonfield==3.1.0
 kombu==3.0.37
-linaro-django-pagination==2.0.2
+git+http://github.com/cdr-stats/django-pagination.git
+# linaro-django-pagination==2.0.2
 lockfile==0.12.2
 MarkupSafe==2.0.1
 python-dateutil==2.8.1
