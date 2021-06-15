@@ -22,7 +22,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ADMINS = (
-    ('Your Name', 'your_email@domain.com'),
+    ('Admin Name', 'admin@domain.com'),
 )
 MANAGERS = ADMINS
 
@@ -119,7 +119,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ujau$^uei_ak=@-v8va(&@q_sc0^1nn*qpwyc-776n&qoam@+v'
+SECRET_KEY = 'ujau$^fuei_ak=@-v8va(&@q_sc0^1nn*qpwyc-776n&qoam@+v'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
