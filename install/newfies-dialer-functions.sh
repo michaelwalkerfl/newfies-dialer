@@ -467,8 +467,8 @@ func_install_source(){
 
     #Install branch develop / callcenter
     if echo $BRANCH | grep -i "^develop" > /dev/null ; then
-        # git checkout -b develop --track origin/develop
-        git checkout develop
+        git checkout -b develop --track origin/develop
+        # git checkout develop
     fi
 
     #Copy files
@@ -521,11 +521,12 @@ func_install_pip_deps(){
     done
 
     #Install Python ESL / this needs to be done within the virtualenv
-    cd /usr/src/freeswitch/libs/esl
-    make pymod-install
+    # cd /usr/src/freeswitch/libs/esl
+    # make pymod-install
+    python -m pip install python-ESL
 
     #Check Python dependencies
-    func_check_dependencies
+    # func_check_dependencies
 
     echo "**********"
     echo "PIP Freeze"
