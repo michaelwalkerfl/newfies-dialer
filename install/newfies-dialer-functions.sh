@@ -461,11 +461,11 @@ func_install_source(){
     #get Newfies-Dialer
     echo "Install Newfies-Dialer..."
     cd /usr/src/
-    rm -rf newfies-dialer
+    # rm -rf newfies-dialer
     mkdir /var/log/newfies
 
-    git clone https://github.com/michaelwalkerfl/newfies-dialer.git
-    cd newfies-dialer
+    #git clone https://github.com/michaelwalkerfl/newfies-dialer.git
+    # cd newfies-dialer
 
     #Install branch develop / callcenter
     if echo $BRANCH | grep -i "^develop" > /dev/null ; then
@@ -505,13 +505,13 @@ func_install_pip_deps(){
     # python -m pip install importlib
 
     echo "Install Basic requirements..."
-    for line in $(cat /usr/src/newfies-dialer/requirements/basic.txt | grep -v \#)
+    for line in $(cat /usr/src/newfies-dialer/requirements/py3-basic.txt | grep -v \#)
     do
         echo "pip install $line"
         python -m pip install $line
     done
     echo "Install Django requirements..."
-    for line in $(cat /usr/src/newfies-dialer/requirements/django.txt | grep -v \#)
+    for line in $(cat /usr/src/newfies-dialer/requirements/py3-django.txt | grep -v \#)
     do
         echo "pip install $line"
         python -m pip install $line django-admin-tools
