@@ -368,7 +368,6 @@ func_install_dependencies(){
     make install
     #add cURL.so to lua libs
     cp cURL.so /usr/local/lib/lua/5.2/
-    cd /usr/src/
 
     # echo ""
     # echo "easy_install -U setuptools pip distribute"
@@ -454,7 +453,7 @@ func_backup_prev_install(){
     #         echo "Press Enter to continue"
     #         read TEMP
     #     fi
-    # fi
+    fi
 }
 
 
