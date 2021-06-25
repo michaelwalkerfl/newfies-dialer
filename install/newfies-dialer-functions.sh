@@ -202,10 +202,10 @@ func_install_dependencies(){
             /etc/init.d/postgresql start
 
             apt-get -y install software-properties-common
-            apt-get -y install python-setuptools python-dev build-essential
+            # apt-get -y install python-setuptools python-dev build-essential
             apt-get -y install nginx supervisor
             apt-get -y install git-core mercurial gawk cmake
-            apt-get -y install python-pip python-venv
+            # apt-get -y install python-pip python-venv
             # for audiofile convertion
             apt-get -y install libsox-fmt-mp3 libsox-fmt-all mpg321
             #repeat flite install in case FS is on a different server
@@ -368,9 +368,10 @@ func_install_dependencies(){
     make install
     #add cURL.so to lua libs
     cp cURL.so /usr/local/lib/lua/5.2/
+    cd /usr/src/
 
-    echo ""
-    echo "easy_install -U setuptools pip distribute"
+    # echo ""
+    # echo "easy_install -U setuptools pip distribute"
     # easy_install -U setuptools pip distribute
 
     # install Bower
@@ -400,23 +401,25 @@ func_setup_virtualenv() {
         ;;
     esac
 
-    # python -m pip install virtualenv
-    # python -m pip install virtualenvwrapper
+    python -m pip install virtualenv
+    python -m pip install virtualenvwrapper
 
-    # # Enable virtualenvwrapper
-    # chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
-    # if [ $chk -lt 1 ] ; then
-    #     echo "Set Virtualenvwrapper into bash"
-    #     echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-    #     echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.bashrc
-    # fi
+    # Enable virtualenvwrapper
+    chk=`grep "virtualenvwrapper" ~/.bashrc|wc -l`
+    if [ $chk -lt 1 ] ; then
+        echo "Set Virtualenvwrapper into bash"
+        echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+        echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.bashrc
+        echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.zshrc
+        echo "source $SCRIPT_VIRTUALENVWRAPPER" >> ~/.zshrc
+    fi
 
     # # Setup virtualenv
-    # export WORKON_HOME=$HOME/.virtualenvs
-    # source $SCRIPT_VIRTUALENVWRAPPER
+    export WORKON_HOME=$HOME/.virtualenvs
+    source $SCRIPT_VIRTUALENVWRAPPER
 
-    # mkvirtualenv $NEWFIES_ENV
-    # workon $NEWFIES_ENV
+    mkvirtualenv $NEWFIES_ENV
+    workon $NEWFIES_ENV
     python -m venv env
     source env/bin/activate
 
@@ -435,23 +438,23 @@ func_backup_prev_install(){
         echo "if you continue the existing installation will be removed!"
         echo ""
         echo "Press Enter to continue or CTRL-C to exit"
-        read TEMP
+    #     read TEMP
 
-        mkdir /tmp/old-newfies-dialer_$DATETIME
-        mv $INSTALL_DIR /tmp/old-newfies-dialer_$DATETIME
-        mkdir /tmp/old-lua-newfies-dialer_$DATETIME
-        mv $LUA_DIR /tmp/old-lua-newfies-dialer_$DATETIME
-        echo "Files from $INSTALL_DIR has been moved to /tmp/old-newfies-dialer_$DATETIME and /tmp/old-lua-newfies-dialer_$DATETIME"
+    #     mkdir /tmp/old-newfies-dialer_$DATETIME
+    #     mv $INSTALL_DIR /tmp/old-newfies-dialer_$DATETIME
+    #     mkdir /tmp/old-lua-newfies-dialer_$DATETIME
+    #     mv $LUA_DIR /tmp/old-lua-newfies-dialer_$DATETIME
+    #     echo "Files from $INSTALL_DIR has been moved to /tmp/old-newfies-dialer_$DATETIME and /tmp/old-lua-newfies-dialer_$DATETIME"
 
-        if [ `sudo -u postgres psql -qAt --list | egrep '^$DATABASENAME\|' | wc -l` -eq 1 ]; then
-            echo ""
-            echo "Run backup with postgresql..."
-            sudo -u postgres pg_dump $DATABASENAME > /tmp/old-newfies-dialer_$DATETIME.pgsqldump.sql
-            echo "PostgreSQL Dump of database $DATABASENAME added in /tmp/old-newfies-dialer_$DATETIME.pgsqldump.sql"
-            echo "Press Enter to continue"
-            read TEMP
-        fi
-    fi
+    #     if [ `sudo -u postgres psql -qAt --list | egrep '^$DATABASENAME\|' | wc -l` -eq 1 ]; then
+    #         echo ""
+    #         echo "Run backup with postgresql..."
+    #         sudo -u postgres pg_dump $DATABASENAME > /tmp/old-newfies-dialer_$DATETIME.pgsqldump.sql
+    #         echo "PostgreSQL Dump of database $DATABASENAME added in /tmp/old-newfies-dialer_$DATETIME.pgsqldump.sql"
+    #         echo "Press Enter to continue"
+    #         read TEMP
+    #     fi
+    # fi
 }
 
 
@@ -465,7 +468,7 @@ func_install_source(){
     mkdir /var/log/newfies
 
     #git clone https://github.com/michaelwalkerfl/newfies-dialer.git
-    # cd newfies-dialer
+    cd newfies-dialer
 
     #Install branch develop / callcenter
     if echo $BRANCH | grep -i "^develop" > /dev/null ; then
@@ -486,6 +489,7 @@ func_install_source(){
     #Upload audio files
     mkdir -p /usr/share/newfies/usermedia/upload/audiofiles
     chown -R $NEWFIES_USER:$NEWFIES_USER /usr/share/newfies/usermedia
+    cd /usr/src/
 }
 
 
@@ -551,8 +555,8 @@ func_prepare_settings(){
     echo ""
 
     #Disable Debug
-    sed -i "s/DEBUG = True/DEBUG = False/g"  $CONFIG_DIR/settings_local.py
-    sed -i "s/TEMPLATE_DEBUG = DEBUG/TEMPLATE_DEBUG = False/g"  $CONFIG_DIR/settings_local.py
+    # sed -i "s/DEBUG = True/DEBUG = False/g"  $CONFIG_DIR/settings_local.py
+    # sed -i "s/TEMPLATE_DEBUG = DEBUG/TEMPLATE_DEBUG = False/g"  $CONFIG_DIR/settings_local.py
 
     #Setup settings_local.py for POSTGRESQL
     sed -i "s/DATABASENAME/$DATABASENAME/"  $CONFIG_DIR/settings_local.py
@@ -820,7 +824,7 @@ func_install_frontend(){
     func_setup_virtualenv
 
     #Backup
-    func_backup_prev_install
+    # func_backup_prev_install
 
     #Install Code Source
     func_install_source
